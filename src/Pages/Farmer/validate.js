@@ -14,9 +14,14 @@ const validate = (values) => {
 	if(values.fathername===""){
 		errors.fathername = "Father Name is Required";
 	}
-	if(values.whatsappnumber===""){
-		errors.whatsappnumber = "Watsapp Number is Required";
-	}else if(values.whatsappnumber.length != 10){
+
+	if(values.phone===""){
+		errors.phone = "Mobile Number is Required";
+	}else if(numberRegex.test(values.phone) === false){
+		errors.phone = "Invalid Mobile Number";
+	}
+
+	if(values.whatsappnumber!="" && numberRegex.test(values.whatsappnumber) === false){
 		errors.whatsappnumber = "Invalid Watsapp Number";
 	}
 

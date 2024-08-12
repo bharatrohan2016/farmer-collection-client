@@ -17,6 +17,7 @@ const Form = () => {
 	initialValues : {
 		name : '',
 		fathername : '',
+		phone : '',
 		whatsappnumber : '',
 		ownedarea : '',
 		leasedarea : '',
@@ -54,7 +55,7 @@ const Form = () => {
 			
 			if(response.message === 'Created'){
 				toast.success("Thank you for onboarding farmer", {
-					position: toast.POSITION.TOP_CENTER,
+					
 					toastId: 2,
 					autoClose: 1000,
 				})
@@ -62,7 +63,11 @@ const Form = () => {
 		}
 		catch(error){
 			console.log(error)
-			toast.error(error.response.data.message);
+			toast.error(error.response.data.message, {
+				
+				toastId: 2,
+				autoClose: 1000,
+			});
 		}
 		
 	}
@@ -100,7 +105,6 @@ const Form = () => {
             boxShadow : 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;'
           }}
         >
-			
 			<Box>
 				<h3>Farmer Basic Details</h3>
 		  		<Grid container spacing={4}>
@@ -133,12 +137,27 @@ const Form = () => {
 						</FormControl>
 					</Grid>
 				</Grid>
+
 				<Grid container spacing={4} mt={1}>
-				  	<Grid item  md={6} xs={12} sm={12}>
+					<Grid item md={6} xs={12} sm={12}>
+						<FormControl fullWidth>
+							<TextField 
+								id="phone" 
+								label="Phone Number*" 
+								variant="standard" 
+								value={formik.values.phone}
+								onChange={formik.handleChange} 
+								onBlur={formik.handleBlur}
+								error={(formik.submitCount>0 && formik.errors.phone) ? true : false}
+								helperText={(formik.submitCount>0 && formik.errors.phone) ? formik.errors.phone : ''}
+							/>
+						</FormControl>
+					</Grid>
+				  	<Grid item md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
 							<TextField 
 								id="whatsappnumber" 
-								label="Watsapp Number" 
+								label="Watsapp Number*" 
 								variant="standard" 
 								value={formik.values.whatsappnumber}
 								onChange={formik.handleChange} 
@@ -149,18 +168,18 @@ const Form = () => {
 							
 						</FormControl>
 					</Grid>
+
 					<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth  error={(formik.submitCount>0 && formik.errors.district) ? true : false}>
-						<InputLabel id="district">District</InputLabel>
+						<InputLabel id="district">District*</InputLabel>
 						<Select
 							name='district'
 							labelId="district"
-							label="district"
+							label="District*"
 							variant="standard" 
 							value={formik.values.district}
 							onChange={(event) => districtChangeHandler(event)} 
 							onBlur={formik.handleBlur}
-							
 							helperText={(formik.submitCount>0 && formik.errors.district) ? formik.errors.district : ''}
 						>
 							<MenuItem  disabled={true} value="">
@@ -175,16 +194,16 @@ const Form = () => {
 						{ (formik.submitCount>0 && formik.errors.district) && <FormHelperText>{formik.errors.district}</FormHelperText> }
 						</FormControl>
 					</Grid>
-				</Grid>
+				
 
-				<Grid container spacing={4} mt={1}>
+				
 				  	<Grid item md={6} xs={12} sm={12}>
 						<FormControl fullWidth error={(formik.submitCount>0 && formik.errors.tehsil) ? true : false}>
-							<InputLabel id="tehsil">Tehsil</InputLabel>
+							<InputLabel id="tehsil">Tehsil*</InputLabel>
 							<Select
 								name='tehsil'
 								labelId="tehsil"
-								label="tehsil"
+								label="Tehsil*"
 								variant="standard" 
 								value={formik.values.tehsil}
 								onChange={(event) => tehsilChangeHandler(event.target.value)} 
@@ -220,11 +239,11 @@ const Form = () => {
 					
 					<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth error={(formik.submitCount>0 && formik.errors.block) ? true : false}>
-							<InputLabel id="block">Block</InputLabel>
+							<InputLabel id="block">Block*</InputLabel>
 							<Select
 								name='block'
 								labelId="block"
-								label="Block"
+								label="Block*"
 								variant="standard" 
 								value={formik.values.block}
 								onChange={formik.handleChange} 
@@ -247,7 +266,7 @@ const Form = () => {
 						formik.values.block === 'other' && 
 						<Grid item  md={6} xs={12} sm={12}>
 							<FormControl fullWidth>
-								<TextField id="otherBlock" label="Other Block"  type='text' variant="standard"  
+								<TextField id="otherBlock" label="Other Block*"  type='text' variant="standard"  
 									value={formik.values.otherBlock}
 									onChange={formik.handleChange} 
 									onBlur={formik.handleBlur}
@@ -257,12 +276,12 @@ const Form = () => {
 							</FormControl>
 						</Grid>
 					}
-				</Grid>
+				
 
-				<Grid container spacing={4} mt={1}>
+				{/* <Grid container spacing={4} mt={1}> */}
 				  	<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
-							<TextField id="village" label="Village" variant="standard" 
+							<TextField id="village" label="Village*" variant="standard" 
 							name='village'
 							value={formik.values.village}
 							onChange={formik.handleChange} 
@@ -274,7 +293,7 @@ const Form = () => {
 					</Grid>
 					<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
-							<TextField id="pincode" label="Pincode" variant="standard" 
+							<TextField id="pincode" label="Pincode*" variant="standard" 
 							value={formik.values.pincode}
 							onChange={formik.handleChange} 
 							onBlur={formik.handleBlur}
@@ -283,12 +302,12 @@ const Form = () => {
 							/>
 						</FormControl>
 					</Grid>
-				</Grid>
+				{/* </Grid> */}
 
-				<Grid container spacing={4} mt={1}>
+				
 				  	<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
-							<TextField id="leasedarea" type='number' label="Leased Land Area" variant="standard" 
+							<TextField id="leasedarea" type='number' label="Leased Land Area(Acres)*" variant="standard" 
 							
 							value={formik.values.leasedarea}
 							onChange={formik.handleChange} 
@@ -300,7 +319,7 @@ const Form = () => {
 					</Grid>
 					<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
-							<TextField id="ownedarea" type='number' label="Owned Land Area" variant="standard" 
+							<TextField id="ownedarea" type='number' label="Owned Land Area(Acres)*" variant="standard" 
 							value={formik.values.ownedarea}
 							onChange={formik.handleChange} 
 							onBlur={formik.handleBlur}
@@ -309,25 +328,17 @@ const Form = () => {
 							/>
 						</FormControl>
 					</Grid>
-				</Grid>
 
-				{/* <Grid container spacing={4} mt={1}>
-				  	<Grid item md={6}>
-						<FormControl fullWidth>
-							<TextField id="leasedarea" label="Leased Land Area" variant="standard" />
-						</FormControl>
-					</Grid>
-					
-				</Grid> */}
+				
 
-				<Grid container spacing={4} mt={1}>
+				
 				  	<Grid item  md={6} xs={12} sm={12}>
 					  <FormControl variant="standard" fullWidth error={(formik.submitCount>0 && formik.errors.cropscultivated) ? true : false}>
-						<InputLabel id="cropscultivated">Crops Cultivated</InputLabel>
+						<InputLabel id="cropscultivated">Crops Cultivated*</InputLabel>
 						<Select
 							labelId="cropscultivated"
 							name="cropscultivated"
-							label="Crops Cultivated"
+							label="Crops Cultivated*"
 							value={formik.values.cropscultivated}
 							onChange={formik.handleChange} 
 							onBlur={formik.handleBlur}
@@ -351,7 +362,7 @@ const Form = () => {
 						formik.values.cropscultivated === 'other' && 
 						<Grid item  md={6} xs={12} sm={12}>
 							<FormControl fullWidth>
-								<TextField id="otherCrop" label="Other Crop"  type='text' variant="standard"  
+								<TextField id="otherCrop" label="Other Crop*"  type='text' variant="standard"  
 									value={formik.values.otherCrop}
 									onChange={formik.handleChange} 
 									onBlur={formik.handleBlur}
@@ -376,11 +387,11 @@ const Form = () => {
 
 					<Grid item  md={6} xs={12} sm={12}>
 					  <FormControl variant="standard" fullWidth error={(formik.submitCount>0 && formik.errors.idprooftype) ? true : false}>
-							<InputLabel id="idprooftype">Id Proof Type</InputLabel>
+							<InputLabel id="idprooftype">Id Proof Type*</InputLabel>
 							<Select
 								labelId="idprooftype"
 								name="idprooftype"
-								label="Id Proof Type"
+								label="Id Proof Type*"
 								value={formik.values.idprooftype}
 								onChange={formik.handleChange} 
 								onBlur={formik.handleBlur}
@@ -397,8 +408,8 @@ const Form = () => {
 					</Grid>
 
 					
-				</Grid>
-
+					</Grid>
+				
 		  		<br/>
 				{ 
 					formik.values.idprooftype !='' &&  
@@ -407,7 +418,7 @@ const Form = () => {
 						<Grid container spacing={4}>
 							<Grid item  md={6} xs={12} sm={12}>
 								<FormControl fullWidth>
-									<TextField id="idnumber" label="Id Proof Number"  type='text' variant="standard"  
+									<TextField id="idnumber" label="Id Proof Number*"  type='text' variant="standard"  
 										value={formik.values.idnumber}
 										onChange={formik.handleChange} 
 										onBlur={formik.handleBlur}
