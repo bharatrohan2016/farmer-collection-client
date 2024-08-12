@@ -25,7 +25,11 @@ const Login = () => {
         console.log(response)
         if(response.message === "Signed In"){
           localStorage.setItem('token', response.token);
-          navigate('/onboard');
+          if(response.role === 'admin'){
+            navigate('/manage');
+          }else{
+            navigate('/onboard');
+          }
           toast.success("Signed In Successfully")
         }
       }catch(error){
