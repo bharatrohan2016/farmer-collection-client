@@ -30,10 +30,10 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar sx={{color: 'white', backgroundColor : '#193c34'}}>
-        <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between'}} > 
+        <Box sx={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems : 'center'}} > 
               {
                 !isMobile && <Box component='img' sx={{
-                  height: '5vh',
+                  height: '9vh',
                   width: '3vw'
                 }} src='./Bharat_rohan.svg'></Box>
               }

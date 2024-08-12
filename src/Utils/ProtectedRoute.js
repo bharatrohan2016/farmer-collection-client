@@ -5,9 +5,11 @@ const ProtectedRoute = ({children}) => {
     const navigate = useNavigate();
     useEffect(() => {
         if(localStorage.getItem('token')){
-            console.log("hit")
             navigate('/onboard');
-        }
+        }else{
+			console.log("hit")
+			navigate('/');
+		}
     },[]);
     
     return children;

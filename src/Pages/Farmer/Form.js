@@ -53,7 +53,11 @@ const Form = () => {
 			const response = await onboard(formData);
 			
 			if(response.message === 'Created'){
-				toast.success("Thank you for onboarding farmer", { delay : '1'})
+				toast.success("Thank you for onboarding farmer", {
+					position: toast.POSITION.TOP_CENTER,
+					toastId: 2,
+					autoClose: 1000,
+				})
 			}
 		}
 		catch(error){

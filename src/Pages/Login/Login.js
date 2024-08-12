@@ -22,7 +22,7 @@ const Login = () => {
       console.log(values);
       try{
         const response = await login(values);
-        
+        console.log(response)
         if(response.message === "Signed In"){
           localStorage.setItem('token', response.token);
           navigate('/onboard');

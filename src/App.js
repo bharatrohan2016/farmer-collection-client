@@ -15,7 +15,7 @@ function App() {
           <Routes>
               <Route path='/' element={ <ProtectedRoute><Login/></ProtectedRoute>} />
               <Route path='/onboard' element={ <ProtectedRoute><Form/></ProtectedRoute>} />
-              <Route path='/manage' element={<Manage/>} />
+              <Route path='/manage' element={<ProtectedRoute><Manage/></ProtectedRoute>} />
           </Routes>
         </Router>
        <ToastContainer/>
