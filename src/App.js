@@ -6,14 +6,15 @@ import Login from './Pages/Login/Login';
 import Form from './Pages/Farmer/Form';
 import Navbar from './Components/Navbar';
 import Manage from './Pages/Manage/Manage';
+import ProtectedRoute from './Utils/ProtectedRoute';
 
 function App() {
   return (
     <div>
        <Router>
           <Routes>
-              <Route path='/' element={ <Login/>} />
-              <Route path='/onboard' element={ <Form/>} />
+              <Route path='/' element={ <ProtectedRoute><Login/></ProtectedRoute>} />
+              <Route path='/onboard' element={ <ProtectedRoute><Form/></ProtectedRoute>} />
               <Route path='/manage' element={<Manage/>} />
           </Routes>
         </Router>

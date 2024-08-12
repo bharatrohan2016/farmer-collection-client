@@ -5,6 +5,9 @@ import BharatrohanTheme from '../../Components/BharatrohanTheme'
 import {useFormik} from 'formik';
 import validate from './validate';
 import { location } from '../../Utils/location';
+import { onboard } from '../../APIS/apiCalls';
+import { toast } from 'react-toastify';
+
 const Form = () => {
   const [tehsil, setTehsil] = useState([]);
   const [block, setBlock] = useState([]);
@@ -18,6 +21,9 @@ const Form = () => {
 		ownedarea : '',
 		leasedarea : '',
 		cropscultivated : '',
+		otherCrop : '',
+		otherTehsil : '',
+		otherBlock : '',
 		village : '',
 		block : '',
 		tehsil : '',
@@ -26,11 +32,35 @@ const Form = () => {
 		idprooftype : '',
 		idnumber : '',
 		file1 : '',
-		file2 : ''
+		file2 : '',
+		khasraNumbers : '',
 	},
 	validate,
-	onSubmit : (values) => {
-		console.log(values);
+	onSubmit : async (values) => {
+		
+
+		let formData = new FormData();
+		for(let key in values){
+			if(key === 'file1' || key === 'file2'){
+				// let index = key === 'file1' ? 0 : 1;
+				formData.append(`images`, values[key]);
+			}else{
+				formData.append(key, values[key]);
+			}
+		}
+
+		try{
+			const response = await onboard(formData);
+			
+			if(response.message === 'Created'){
+				toast.success("Thank you for onboarding farmer", { delay : '1'})
+			}
+		}
+		catch(error){
+			console.log(error)
+			toast.error(error.response.data.message);
+		}
+		
 	}
   })
 
@@ -164,11 +194,26 @@ const Form = () => {
 										<MenuItem value={item}>{item}</MenuItem>	
 									)
 								}
-								
+								{/* <MenuItem value='other'>Other</MenuItem> */}
 							</Select>
 							{ (formik.submitCount>0 && formik.errors.tehsil) && <FormHelperText>{formik.errors.tehsil}</FormHelperText> }
 						</FormControl>
 					</Grid>
+					{/* {
+						formik.values.tehsil === 'other' && 
+						<Grid item  md={6} xs={12} sm={12}>
+							<FormControl fullWidth>
+								<TextField id="otherTehsil" label="Other Tehsil"  type='text' variant="standard"  
+									value={formik.values.otherTehsil}
+									onChange={formik.handleChange} 
+									onBlur={formik.handleBlur}
+									error={(formik.submitCount>0 && formik.errors.otherTehsil) ? true : false}
+									helperText={(formik.submitCount>0 && formik.errors.otherTehsil) ? formik.errors.otherTehsil : ''}
+								/>
+							</FormControl>
+						</Grid>
+					} */}
+					
 					<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth error={(formik.submitCount>0 && formik.errors.block) ? true : false}>
 							<InputLabel id="block">Block</InputLabel>
@@ -189,10 +234,25 @@ const Form = () => {
 										<MenuItem value={item}>{item}</MenuItem>	
 									)
 								}
+								<MenuItem value='other'>Other</MenuItem>
 							</Select>
 							{ (formik.submitCount>0 && formik.errors.block) && <FormHelperText>{formik.errors.block}</FormHelperText> }
 						</FormControl>
 					</Grid>
+					{
+						formik.values.block === 'other' && 
+						<Grid item  md={6} xs={12} sm={12}>
+							<FormControl fullWidth>
+								<TextField id="otherBlock" label="Other Block"  type='text' variant="standard"  
+									value={formik.values.otherBlock}
+									onChange={formik.handleChange} 
+									onBlur={formik.handleBlur}
+									error={(formik.submitCount>0 && formik.errors.otherBlock) ? true : false}
+									helperText={(formik.submitCount>0 && formik.errors.otherBlock) ? formik.errors.otherBlock : ''}
+								/>
+							</FormControl>
+						</Grid>
+					}
 				</Grid>
 
 				<Grid container spacing={4} mt={1}>
@@ -225,6 +285,7 @@ const Form = () => {
 				  	<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>
 							<TextField id="leasedarea" type='number' label="Leased Land Area" variant="standard" 
+							
 							value={formik.values.leasedarea}
 							onChange={formik.handleChange} 
 							onBlur={formik.handleBlur}
@@ -281,6 +342,33 @@ const Form = () => {
 						{ (formik.submitCount>0 && formik.errors.cropscultivated) ? <FormHelperText>{formik.errors.cropscultivated}</FormHelperText> : '' }
 					</FormControl>
 					</Grid>
+					
+					{
+						formik.values.cropscultivated === 'other' && 
+						<Grid item  md={6} xs={12} sm={12}>
+							<FormControl fullWidth>
+								<TextField id="otherCrop" label="Other Crop"  type='text' variant="standard"  
+									value={formik.values.otherCrop}
+									onChange={formik.handleChange} 
+									onBlur={formik.handleBlur}
+									error={(formik.submitCount>0 && formik.errors.otherCrop) ? true : false}
+									helperText={(formik.submitCount>0 && formik.errors.otherCrop) ? formik.errors.otherCrop : ''}
+								/>
+							</FormControl>
+						</Grid>
+					}
+
+					<Grid item  md={6} xs={12} sm={12}>
+						<FormControl fullWidth>
+							<TextField id="khasraNumbers" label="Khasra Numbers(Seperate by commas)" variant="standard" 
+							value={formik.values.khasraNumbers}
+							onChange={formik.handleChange} 
+							onBlur={formik.handleBlur}
+							error={(formik.submitCount>0 && formik.errors.khasraNumbers) ? true : false}
+							helperText={(formik.submitCount>0 && formik.errors.khasraNumbers) ? formik.errors.khasraNumbers : ''}
+							/>
+						</FormControl>
+					</Grid>
 
 					<Grid item  md={6} xs={12} sm={12}>
 					  <FormControl variant="standard" fullWidth error={(formik.submitCount>0 && formik.errors.idprooftype) ? true : false}>
@@ -303,6 +391,7 @@ const Form = () => {
 							{ (formik.submitCount>0 && formik.errors.idprooftype) ? <FormHelperText>{formik.errors.idprooftype}</FormHelperText> : '' }
 						</FormControl>
 					</Grid>
+
 					
 				</Grid>
 
@@ -326,7 +415,7 @@ const Form = () => {
 							<Grid item  md={6} xs={12} sm={12}>
 								<FormControl fullWidth error={(formik.submitCount>0 && formik.errors.file1) ? true : false}>
 									<InputLabel id="file1">{formik.values.idprooftype === 'aadhar' ? 'Front Side' : 'Document'}</InputLabel>
-									<Input id="file1" type='file' variant="standard" onChange={(event) => formik.setFieldValue('file1', event.target.value)}/>
+									<Input id="file1" type='file' variant="standard" onChange={(event) => formik.setFieldValue('file1', event.target.files[0])}/>
 									<FormHelperText>{formik.values.idprooftype === 'aadhar' } File is to be uploaded.</FormHelperText>
 								</FormControl>
 							</Grid>
@@ -335,7 +424,7 @@ const Form = () => {
 								<Grid item  md={6} xs={12} sm={12}>
 									<FormControl fullWidth  error={(formik.submitCount>0 && formik.errors.file2) ? true : false}>
 										<InputLabel id="file2">Back Side*</InputLabel>
-										<Input id="file2" type='file' variant="standard" onChange={(event) => formik.setFieldValue('file2', event.target.value)}/>
+										<Input id="file2" type='file' variant="standard" onChange={(event) => formik.setFieldValue('file2', event.target.files[0])}/>
 										<FormHelperText>Back Image file </FormHelperText>
 									</FormControl>
 								</Grid>

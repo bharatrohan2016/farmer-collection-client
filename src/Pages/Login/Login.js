@@ -24,7 +24,7 @@ const Login = () => {
         const response = await login(values);
         
         if(response.message === "Signed In"){
-          localStorage.setItem('token', response);
+          localStorage.setItem('token', response.token);
           navigate('/onboard');
           toast.success("Signed In Successfully")
         }

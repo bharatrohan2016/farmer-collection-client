@@ -2,11 +2,11 @@
 
 const validate = (values) => {
 	const errors = {};
-	console.log(values);
-	const aadharRegex = new RegExp('^\d{12}$');
-	const panRegex = new RegExp('^[A-Z]{5}\d{4}[A-Z]{1}$');
+	// console.log(values);
 	const voterRegex = new RegExp('^[A-Z]{3}\d{7}$');
-	const numberRegex = new RegExp('^\d{10}$');
+	const aadharRegex = new RegExp('^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$');
+    const numberRegex = new RegExp('^[6-9]{1}[0-9]{9}');
+    const panRegex = new RegExp("^[A-Z]{5}[0-9]{4}[A-Z]{1}$");
 
 	if(values.name===""){
 		errors.name = "Name is Required";
@@ -29,14 +29,23 @@ const validate = (values) => {
 	if(values.cropscultivated===""){
 		errors.cropscultivated = "Crops Cultivated is Required";
 	}
+	if(values.cropscultivated==="other" && values.otherCrop === ""){
+		errors.otherCrop = "Crop name is Required";
+	}
 	if(values.village===""){
 		errors.village = "Village is Required";
 	}
 	if(values.block===""){
 		errors.block = "Block is Required";
 	}
+	if(values.block==="other" && values.otherBlock === ""){
+		errors.otherBlock = "Block name is Required";
+	}
 	if(values.tehsil===""){
 		errors.tehsil = "Tehsil is Required";
+	}
+	if(values.tehsil==="other" && values.otherTehsil === ""){
+		errors.otherTehsil = "Tehsil name is Required";
 	}
 	if(values.district===""){
 		errors.district = "District is Required";
@@ -57,7 +66,9 @@ const validate = (values) => {
 		if(values.idnumber===''){
 			errors.idnumber = "Pan Number is Required"
 		}else{
-
+			if(panRegex.test(values.idnumber) === false){
+				errors.idnumber = "Invalid Pan Number"
+			}
 		}
 
 		if(values.file1===''){
@@ -68,7 +79,9 @@ const validate = (values) => {
 		if(values.idnumber===''){
 			errors.idnumber = "Aadhar Number is Required"
 		}else{
-
+			if(aadharRegex.test(values.idnumber) === false){
+				errors.idnumber = "Invalid Aadhar Number"
+			}
 		}
 		if(values.file1===''){
 			errors.file1 = "Front Image is Required"
@@ -81,13 +94,14 @@ const validate = (values) => {
 		if(values.idnumber===''){
 			errors.idnumber = "Voter Id Number is Required"
 		}else{
-
+			if(voterRegex.test(values.idnumber) === false){
+				errors.idnumber = "Invalid Pan Number"
+			}
 		}
 		if(values.file1===''){
 			errors.file1 = "Voter Card is Required"
 		}
 	}
-	
 	
 	return errors;
 }
