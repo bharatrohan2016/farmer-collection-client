@@ -26,9 +26,3 @@ export const cropsList = [
     },
 	
 ];
-<MenuItem value='paddy'>Paddy</MenuItem>
-							<MenuItem value='potato'>Potato</MenuItem>
-							<MenuItem value='mentha'>Mentha</MenuItem>
-							<MenuItem value='mustard'>Mustard</MenuItem>
-							<MenuItem value='wheat'>Wheat</MenuItem>
-							<MenuItem value='melons'>Melons</MenuItem>
