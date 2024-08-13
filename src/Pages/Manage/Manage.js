@@ -5,6 +5,7 @@ import Navbar from '../../Components/Navbar'
 import { Box } from '@mui/material'
 import { manage } from '../../APIS/apiCalls';
 import {MaterialReactTable} from "material-react-table";
+import { toast } from 'react-toastify'
 
 const Manage = () => {
   const [data, setData] = useState([]);
@@ -62,17 +63,26 @@ const Manage = () => {
       Cell : ({row}) => {
         console.log(row)
           const user = row.original.userid;
-          return <>{ user?.firstname + ' ' + user?.lastname }</>
+          return <>{ user?.firstname + ' ' + user?.lastname } - {user?.farmers.length}</>
       }
     },
   ]
 
   useEffect(()=> {
     (async () =>{
-      const data = await manage();
-      if(data.message){
-        setData(data.response);
+      try{
+        const data = await manage();
+        if(data.message){
+          setData(data.response);
+        }
+      }catch(error){
+        // console.log(error.response)
+        toast.error(error.statusText, {
+          toastId: 2,
+          autoClose: 1000,
+        });
       }
+      
     })();
   }, []);
 
