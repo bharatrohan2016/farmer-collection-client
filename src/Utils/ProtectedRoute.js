@@ -5,9 +5,10 @@ const ProtectedRoute = ({children}) => {
     const navigate = useNavigate();
     useEffect(() => {
         if(localStorage.getItem('token')){
-            navigate('/onboard');
+            const role = localStorage.getItem('role');
+            role === 'admin' ? navigate('/manage') : navigate('/onboard');
         }else{
-			console.log("hit")
+			
 			navigate('/');
 		}
     },[]);

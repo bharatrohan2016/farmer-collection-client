@@ -63,7 +63,7 @@ const Manage = () => {
       Cell : ({row}) => {
         console.log(row)
           const user = row.original.userid;
-          return <>{ user?.firstname + ' ' + user?.lastname } - {user?.farmers.length}</>
+          return <>{ (user?.firstname + ' ' + user?.lastname).toUpperCase() } - {user?.farmers.length}</>
       }
     },
   ]
@@ -82,7 +82,6 @@ const Manage = () => {
           autoClose: 1000,
         });
       }
-      
     })();
   }, []);
 
