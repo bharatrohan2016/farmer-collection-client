@@ -6,6 +6,9 @@ const BharatrohanTheme = createTheme({
     primary: {
       main: '#193c34', // Replace with Bharatrohan primary color
     },
+    danger: {
+      main: '#b22222', // Replace with Bharatrohan primary color
+    },
     secondary: {
       main: '#C70039', // Replace with Bharatrohan secondary color
     },

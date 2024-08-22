@@ -7,8 +7,11 @@ import validate from './validate';
 import { location } from '../../Utils/location';
 import { onboard } from '../../APIS/apiCalls';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const Form = () => {
+  const {id} = useParams();
+  console.log(id);
   const [tehsil, setTehsil] = useState([]);
   const [block, setBlock] = useState([]);
   const districts = Object.keys(location);
@@ -39,7 +42,6 @@ const Form = () => {
 	validate,
 	onSubmit : async (values) => {
 		
-
 		let formData = new FormData();
 		for(let key in values){
 			if(key === 'file1' || key === 'file2'){
@@ -303,7 +305,6 @@ const Form = () => {
 						</FormControl>
 					</Grid>
 				{/* </Grid> */}
-
 				
 				  	<Grid item  md={6} xs={12} sm={12}>
 						<FormControl fullWidth>

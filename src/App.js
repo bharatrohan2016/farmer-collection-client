@@ -7,6 +7,7 @@ import Form from './Pages/Farmer/Form';
 import Navbar from './Components/Navbar';
 import Manage from './Pages/Manage/Manage';
 import ProtectedRoute from './Utils/ProtectedRoute';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Routes>
               <Route path='/' element={ <ProtectedRoute><Login/></ProtectedRoute>} />
               <Route path='/onboard' element={ <ProtectedRoute><Form/></ProtectedRoute>} />
+              <Route path='/onboard/:id' element={ <ProtectedRoute><Form/></ProtectedRoute>} />
               <Route path='/manage' element={ <ProtectedRoute><Manage/></ProtectedRoute>} />
           </Routes>
         </Router>

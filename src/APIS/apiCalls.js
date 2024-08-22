@@ -1,6 +1,6 @@
 import axios from 'axios';
-const url = 'https://records-collection.bharatrohan.in';
-// const url = 'http://localhost:3200'
+// const url = 'https://records-collection.bharatrohan.in';
+const url = 'http://localhost:3200'
 
 
 function getHeaders(){
@@ -26,6 +26,16 @@ export const login = async (data) => {
 
 export const onboard = async (data) => {
 	const result = await axios.post(`${url}/api/farmer/register-farmer`, data, { headers : getFormHeaders() });
+	return result.data;
+}
+
+export const update = async (id, data) => {
+	const result = await axios.patch(`${url}/api/farmer/update-farmer/${id}`, data, { headers : getFormHeaders() });
+	return result.data;
+}
+
+export const deleteFarmer = async (id) => {
+	const result = await axios.delete(`${url}/api/farmer/delete-farmer/${id}`, { headers : getHeaders() });
 	return result.data;
 }
 
