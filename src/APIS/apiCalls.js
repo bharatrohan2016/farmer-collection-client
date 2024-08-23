@@ -43,3 +43,7 @@ export const manage = async (data) => {
 	const result = await axios.get(`${url}/api/farmer/get-all`, {headers : getHeaders()});
 	return result.data;
 }
+export const getOne = async (id) => {
+	const result = await axios.get(`${url}/api/farmer/get-single/${id}`, {headers : getHeaders()});
+	return result.data;
+}

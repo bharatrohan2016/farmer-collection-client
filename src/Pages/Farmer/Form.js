@@ -1,11 +1,11 @@
 import { Box, Button, FormControl, FormHelperText, Grid, Input, InputLabel, MenuItem, Select, TextField, ThemeProvider } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../Components/Navbar'
 import BharatrohanTheme from '../../Components/BharatrohanTheme'
 import {useFormik} from 'formik';
 import validate from './validate';
 import { location } from '../../Utils/location';
-import { onboard } from '../../APIS/apiCalls';
+import { getOne, onboard, update } from '../../APIS/apiCalls';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 
@@ -53,11 +53,17 @@ const Form = () => {
 		}
 
 		try{
-			const response = await onboard(formData);
+			const response = id===undefined ? await onboard(formData) : await update(id, formData);
+			console.log(response);
 			
 			if(response.message === 'Created'){
 				toast.success("Thank you for onboarding farmer", {
-					
+					toastId: 2,
+					autoClose: 1000,
+				})
+			}
+			if(response.message === 'Farmer updated successfully'){
+				toast.success("Farmer updated successfully", {
 					toastId: 2,
 					autoClose: 1000,
 				})
@@ -66,7 +72,6 @@ const Form = () => {
 		catch(error){
 			console.log(error)
 			toast.error(error.response.data.message, {
-				
 				toastId: 2,
 				autoClose: 1000,
 			});
@@ -89,6 +94,20 @@ const Form = () => {
 	console.log(arr);
 	formik.setFieldValue('tehsil', value);
   }
+
+  useEffect(()=>{
+	if(id!=undefined){
+		getOne(id).then((response) =>{
+			console.log(response);
+			
+			formik.setValues(response.response);
+			let arr = Object.keys(location[response.response.district]);
+			setTehsil(arr);
+			arr = location[response.response.district][response.response.tehsil];
+			setBlock(arr);
+		})
+	}
+  },[])
 
   return (
 	<ThemeProvider theme={BharatrohanTheme}>

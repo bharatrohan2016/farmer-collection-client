@@ -21,7 +21,7 @@ const validate = (values) => {
 		errors.phone = "Invalid Mobile Number";
 	}
 
-	if(values.whatsappnumber!="" && numberRegex.test(values.whatsappnumber) === false){
+	if(values.whatsappnumber && values.whatsappnumber!="" && numberRegex.test(values.whatsappnumber) === false){
 		errors.whatsappnumber = "Invalid Watsapp Number";
 	}
 
@@ -57,15 +57,16 @@ const validate = (values) => {
 	}
 	if(values.pincode===""){
 		errors.pincode = "Pincode is Required"
-	}else if(values.pincode.length != 6){
+	}
+	else if(values.pincode.length != 6){
+		console.log(values.pincode.length);
+		
 		errors.pincode = "Invalid Pincode";
 	}
 
 	if(values.idprooftype===""){
 		errors.idprooftype = "Id Proof Type is Required"
 	}
-
-	
 
 	if(values.idprooftype==="pan"){
 		if(values.idnumber===''){
@@ -107,6 +108,7 @@ const validate = (values) => {
 			errors.file1 = "Voter Card is Required"
 		}
 	}
+	console.log(errors)
 	
 	return errors;
 }
