@@ -1,6 +1,6 @@
 import axios from 'axios';
-// const url = 'https://records-collection.bharatrohan.in';
-const url = 'http://localhost:3200'
+const url = 'https://records-collection.bharatrohan.in';
+// const url = 'http://localhost:3200'
 
 
 function getHeaders(){
