@@ -6,9 +6,10 @@ const ProtectedRoute = ({children}) => {
     useEffect(() => {
         if(localStorage.getItem('token')){
             const role = localStorage.getItem('role');
-            role === 'admin' ? navigate('/manage') : navigate('/onboard');
+            if(role!='admin'){
+                navigate('/onboard')
+            }
         }else{
-			
 			navigate('/');
 		}
     },[]);
